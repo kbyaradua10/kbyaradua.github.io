@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+<title>Kbyaradua Data Manager</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background: #f4f7fb;
+  color: #172033;
+}
+
+/* HEADER */
+header {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  padding: 22px 18px;
+  box-shadow: 0 4px 15px rgba(0,0,0,.12);
+}
+
+.header-content {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 46px;
+  height: 46px;
+  background: rgba(255,255,255,.18);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.logo h1 {
+  font-size: 22px;
+}
+
+.logo p {
+  opacity: .85;
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* STATS */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.stat {
+  background: white;
+  padding: 18px;
+  border-radius: 15px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.06);
+}
+
+.stat-icon {
+  font-size: 24px;
+}
+
+.stat h2 {
+  font-size: 26px;
+  margin-top: 8px;
+}
+
+.stat p {
+  color: #718096;
+  font-size: 13px;
+}
+
+/* CARD */
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.06);
+}
+
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.card-title h2 {
+  font-size: 19px;
+}
+
+/* FORM */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 7px;
+  color: #475569;
+}
+
+input, select, textarea {
+  width: 100%;
+  border: 1px solid #dbe2ea;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 15px;
+  outline: none;
+  background: white;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.10);
+}
+
+textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+
+/* BUTTONS */
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary {
+  background: #2563eb;
+  color: white;
+}
+
+.primary:hover {
+  background: #1d4ed8;
+}
+
+.secondary {
+  background: #e8eef8;
+  color: #334155;
+}
+
+.danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.success {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* SEARCH */
+.search-box {
+  margin-bottom: 15px;
+}
+
+.search-box input {
+  padding: 14px;
+}
+
+/* TABLE */
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+th {
+  background: #f1f5f9;
+  text-align: left;
+  padding: 13px;
+  font-size: 13px;
+  color: #475569;
+}
+
+td {
+  padding: 13px;
+  border-bottom: 1px solid #edf0f4;
+  font-size: 14px;
+}
+
+tr:hover td {
+  background: #f8fafc;
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.badge-active {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.badge-inactive {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.action-btn {
+  padding: 7px 10px;
+  margin-right: 4px;
+  font-size: 12px;
+}
+
+/* EMPTY */
+.empty {
+  text-align: center;
+  padding: 35px 10px;
+  color: #94a3b8;
+}
+
+.empty-icon {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 12px;
+  padding: 25px;
+}
+
+/* MOBILE */
+@media (max-width: 650px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field.full {
+    grid-column: auto;
+  }
+
+  .container {
+    padding: 14px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .logo h1 {
+    font-size: 19px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-content">
+    <div class="logo">
+      <div class="logo-icon">📊</div>
+      <div>
+        <h1>Kbyaradua Data Manager</h1>
+        <p>Simple • Fast • Organized</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- STATISTICS -->
+  <section class="stats">
+
+    <div class="stat">
+      <div class="stat-icon">👥</div>
+      <h2 id="totalRecords">0</h2>
+      <p>Total Records</p>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">✅</div>
+      <h2 id="activeRecords">0</h2>
+      <p>Active Records</p>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">📅</div>
+      <h2 id="todayRecords">0</h2>
+      <p>Added Today</p>
+    </div>
+
+  </section>
+
+
+  <!-- ADD RECORD -->
+  <section class="card">
+
+    <div class="card-title">
+      <h2 id="formTitle">➕ Add New Record</h2>
+    </div>
+
+    <form id="recordForm">
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Full Name</label>
+          <input
+            type="text"
+            id="name"
+            placeholder="Enter full name"
+            required>
+        </div>
+
+        <div class="field">
+          <label>Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            placeholder="e.g. 08012345678">
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="example@email.com">
+        </div>
+
+        <div class="field">
+          <label>Category</label>
+          <select id="category">
+            <option value="Customer">Customer</option>
+            <option value="Student">Student</option>
+            <option value="Staff">Staff</option>
+            <option value="Member">Member</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Status</label>
+          <select id="status">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Date</label>
+          <input
+            type="date"
+            id="date"
+            required>
+        </div>
+
+        <div class="field full">
+          <label>Notes</label>
+          <textarea
+            id="notes"
+            placeholder="Add additional information..."></textarea>
+        </div>
+
+      </div>
+
+      <div class="buttons">
+        <button type="submit" class="primary">
+          💾 Save Record
+        </button>
+
+        <button type="button" class="secondary" onclick="resetForm()">
+          Clear
+        </button>
+      </div>
+
+    </form>
+  </section>
+
+
+  <!-- RECORDS -->
+  <section class="card">
+
+    <div class="card-title">
+      <h2>📋 Records</h2>
+
+      <button class="success" onclick="exportData()">
+        📥 Export
+      </button>
+    </div>
+
+    <div class="search-box">
+      <input
+        type="search"
+        id="search"
+        placeholder="🔎 Search by name, phone, email or category..."
+        oninput="displayRecords()">
+    </div>
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody id="recordsTable"></tbody>
+
+      </table>
+
+      <div id="emptyState" class="empty">
+        <div class="empty-icon">📂</div>
+        <p>No records found.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- DATA MANAGEMENT -->
+  <section class="card">
+
+    <div class="card-title">
+      <h2>⚙️ Data Management</h2>
+    </div>
+
+    <p style="color:#64748b;font-size:14px;margin-bottom:15px;">
+      Your records are stored locally in this browser.
+    </p>
+
+    <div class="buttons">
+
+      <button class="secondary" onclick="exportData()">
+        📥 Export Data
+      </button>
+
+      <button class="danger" onclick="deleteAllRecords()">
+        🗑️ Delete All Records
+      </button>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer>
+  © 2026 Kbyaradua Data Manager • Built with HTML, CSS & JavaScript
+</footer>
+
+
+<script>
+
+let records = JSON.parse(
+  localStorage.getItem("kbyaradua_records")
+) || [];
+
+let editingId = null;
+
+
+/* SET TODAY */
+document.getElementById("date").value =
+  new Date().toISOString().split("T")[0];
+
+
+/* FORM SUBMISSION */
+document.getElementById("recordForm").addEventListener(
+  "submit",
+  function(e) {
+
+    e.preventDefault();
+
+    const record = {
+
+      id: editingId || Date.now(),
+
+      name: document.getElementById("name").value.trim(),
+
+      phone: document.getElementById("phone").value.trim(),
+
+      email: document.getElementById("email").value.trim(),
+
+      category: document.getElementById("category").value,
+
+      status: document.getElementById("status").value,
+
+      date: document.getElementById("date").value,
+
+      notes: document.getElementById("notes").value.trim(),
+
+      createdAt:
+        editingId
+          ? getExistingDate(editingId)
+          : new Date().toISOString()
+
+    };
+
+
+    if (editingId) {
+
+      records = records.map(r =>
+        r.id === editingId ? record : r
+      );
+
+      alert("Record updated successfully!");
+
+    } else {
+
+      records.push(record);
+
+      alert("Record saved successfully!");
+
+    }
+
+
+    saveData();
+
+    resetForm();
+
+    displayRecords();
+
+  }
+);
+
+
+/* EXISTING DATE */
+function getExistingDate(id) {
+
+  const found = records.find(r => r.id === id);
+
+  return found
+    ? found.createdAt
+    : new Date().toISOString();
+
+}
+
+
+/* SAVE */
+function saveData() {
+
+  localStorage.setItem(
+    "kbyaradua_records",
+    JSON.stringify(records)
+  );
+
+}
+
+
+/* DISPLAY */
+function displayRecords() {
+
+  const table =
+    document.getElementById("recordsTable");
+
+  const empty =
+    document.getElementById("emptyState");
+
+  const search =
+    document.getElementById("search")
+      .value
+      .toLowerCase();
+
+  const filtered = records.filter(r =>
+
+    r.name.toLowerCase().includes(search) ||
+
+    r.phone.toLowerCase().includes(search) ||
+
+    r.email.toLowerCase().includes(search) ||
+
+    r.category.toLowerCase().includes(search)
+
+  );
+
+
+  table.innerHTML = "";
+
+
+  if (filtered.length === 0) {
+
+    empty.style.display = "block";
+
+  } else {
+
+    empty.style.display = "none";
+
+
+    filtered.forEach(record => {
+
+      const row =
+        document.createElement("tr");
+
+
+      row.innerHTML = `
+
+        <td>
+          <strong>${escapeHTML(record.name)}</strong>
+          ${
+            record.email
+              ? `<br><small style="color:#94a3b8">
+                  ${escapeHTML(record.email)}
+                </small>`
+              : ""
+          }
+        </td>
+
+        <td>${escapeHTML(record.phone || "-")}</td>
+
+        <td>${escapeHTML(record.category)}</td>
+
+        <td>
+          <span class="badge ${
+            record.status === "Active"
+              ? "badge-active"
+              : "badge-inactive"
+          }">
+            ${escapeHTML(record.status)}
+          </span>
+        </td>
+
+        <td>${escapeHTML(record.date)}</td>
+
+        <td>
+
+          <button
+            class="secondary action-btn"
+            onclick="editRecord(${record.id})">
+            Edit
+          </button>
+
+          <button
+            class="danger action-btn"
+            onclick="deleteRecord(${record.id})">
+            Delete
+          </button>
+
+        </td>
+      `;
+
+
+      table.appendChild(row);
+
+    });
+
+  }
+
+
+  updateStats();
+
+}
+
+
+/* ESCAPE HTML */
+function escapeHTML(value) {
+
+  const div = document.createElement("div");
+
+  div.textContent = value || "";
+
+  return div.innerHTML;
+
+}
+
+
+/* EDIT */
+function editRecord(id) {
+
+  const record =
+    records.find(r => r.id === id);
+
+  if (!record) return;
+
+
+  editingId = id;
+
+
+  document.getElementById("name").value =
+    record.name;
+
+  document.getElementById("phone").value =
+    record.phone;
+
+  document.getElementById("email").value =
+    record.email;
+
+  document.getElementById("category").value =
+    record.category;
+
+  document.getElementById("status").value =
+    record.status;
+
+  document.getElementById("date").value =
+    record.date;
+
+  document.getElementById("notes").value =
+    record.notes;
+
+
+  document.getElementById("formTitle").textContent =
+    "✏️ Edit Record";
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* DELETE */
+function deleteRecord(id) {
+
+  if (!confirm("Delete this record?")) return;
+
+
+  records =
+    records.filter(r => r.id !== id);
+
+
+  saveData();
+
+  displayRecords();
+
+}
+
+
+/* DELETE EVERYTHING */
+function deleteAllRecords() {
+
+  if (records.length === 0) {
+
+    alert("There are no records to delete.");
+
+    return;
+
+  }
+
+
+  if (
+    confirm(
+      "Are you sure you want to delete ALL records? This cannot be undone."
+    )
+  ) {
+
+    records = [];
+
+    saveData();
+
+    displayRecords();
+
+    alert("All records deleted.");
+
+  }
+
+}
+
+
+/* RESET FORM */
+function resetForm() {
+
+  editingId = null;
+
+  document.getElementById("recordForm").reset();
+
+  document.getElementById("date").value =
+    new Date().toISOString().split("T")[0];
+
+  document.getElementById("formTitle").textContent =
+    "➕ Add New Record";
+
+}
+
+
+/* STATISTICS */
+function updateStats() {
+
+  document.getElementById("totalRecords")
+    .textContent = records.length;
+
+
+  document.getElementById("activeRecords")
+    .textContent =
+      records.filter(r =>
+        r.status === "Active"
+      ).length;
+
+
+  const today =
+    new Date().toISOString().split("T")[0];
+
+
+  document.getElementById("todayRecords")
+    .textContent =
+      records.filter(r =>
+        r.date === today
+      ).length;
+
+}
+
+
+/* EXPORT CSV */
+function exportData() {
+
+  if (records.length === 0) {
+
+    alert("There is no data to export.");
+
+    return;
+
+  }
+
+
+  const headers = [
+    "Name",
+    "Phone",
+    "Email",
+    "Category",
+    "Status",
+    "Date",
+    "Notes"
+  ];
+
+
+  const rows = records.map(r => [
+
+    r.name,
+    r.phone,
+    r.email,
+    r.category,
+    r.status,
+    r.date,
+    r.notes
+
+  ]);
+
+
+  const csv = [
+
+    headers,
+
+    ...rows
+
+  ].map(row =>
+
+    row.map(value =>
+      `"${String(value || "")
+        .replace(/"/g, '""')}"`
+    ).join(",")
+
+  ).join("\n");
+
+
+  const blob =
+    new Blob(
+      [csv],
+      {type: "text/csv;charset=utf-8;"}
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const link =
+    document.createElement("a");
+
+
+  link.href = url;
+
+  link.download =
+    "kbyaradua-data.csv";
+
+  link.click();
+
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+/* LOAD */
+displayRecords();
+
+</script>
+
+</body>
+</html>
